@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using SlamCodeBlog.HidingEndpoints.Extensions;
+using SlamCodeBlog.HidingEndpoints.Filter;
 
 namespace SlamCodeBlog.HidingEndpoints.Controllers
 {
@@ -31,7 +32,9 @@ namespace SlamCodeBlog.HidingEndpoints.Controllers
         }
 
         [HttpGet("api/v2/weather-forecast", Name = "GetWeatherForecastV2")]
-        [ExcludeOnEnvironments("Production")]
+        [ExcludeOnEnvironments("Development")]
+        //[DevelopmentOnly]
+        //[HideEndpoint]
         public IEnumerable<WeatherForecastV2> GetV2()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecastV2
