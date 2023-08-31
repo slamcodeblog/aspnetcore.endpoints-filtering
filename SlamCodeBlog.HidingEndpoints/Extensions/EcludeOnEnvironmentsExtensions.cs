@@ -20,6 +20,9 @@ namespace SlamCodeBlog.HidingEndpoints.Extensions
             return false;
         }
 
+        public static bool IsExcludedFromEnvironment(this ExcludeOnEnvironmentsAttribute attr, string environment) =>
+            attr.Environments.Contains(environment);
+
         public static IEndpointRouteBuilder RemoveExcludedFromEnvironment(
                     this IEndpointRouteBuilder endpoints, IHostEnvironment environment)
         {

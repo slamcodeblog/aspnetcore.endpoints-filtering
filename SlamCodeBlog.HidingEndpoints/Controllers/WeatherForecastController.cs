@@ -33,9 +33,23 @@ namespace SlamCodeBlog.HidingEndpoints.Controllers
 
         [HttpGet("api/v2/weather-forecast", Name = "GetWeatherForecastV2")]
         [ExcludeOnEnvironments("Development")]
+        //[ApiExplorerSettings(IgnoreApi = true)]
         //[DevelopmentOnly]
         //[HideEndpoint]
         public IEnumerable<WeatherForecastV2> GetV2()
+        {
+            return Enumerable.Range(1, 5).Select(index => new WeatherForecastV2
+            {
+                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
+                TemperatureC = Random.Shared.Next(-20, 55),
+                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+            })
+            .ToArray();
+        }
+
+        [HttpGet("api/v2/weather-forecast-other", Name = "GetWeatherForecastOtherV2")]
+        [ExcludeOnEnvironments("Development")]
+        public IEnumerable<WeatherForecastV2> GetOtherV2()
         {
             return Enumerable.Range(1, 5).Select(index => new WeatherForecastV2
             {
