@@ -1,5 +1,5 @@
 using SlamCodeBlog.HidingEndpoints.Extensions;
-using SlamCodeBlog.HidingEndpoints.Swagger;
+using static SlamCodeBlog.HidingEndpoints.Swagger.SwaggerConfigurationExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,9 +8,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-// swagger using document filter
-builder.Services.AddSwaggerGen(
-    opt => opt.DocumentFilter<ExcludeOnEnvironmentsDocumentsFilter>());
+// swagger using inclusion predicate
+builder.Services.AddSwaggerGen(opt => 
+    opt.DocInclusionPredicate((docId, apiDesc) => IsIncludedInEnvironment(docId, apiDesc, builder.Environment)));
 
 var app = builder.Build();
 
